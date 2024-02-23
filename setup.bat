@@ -4,106 +4,92 @@ set "author=snoopti"
 
 title %name% by %author%
 cls
-goto step1
 
-:step1
-cls
+echo --- Welcome to %name%! ---
+
+:check_git
 echo.
-echo --- STEP 1 ---
+echo Check if Git is installed...
+where git >nul 2>nul
+if %errorlevel% neq 0 (
+    echo Git is not installed.
+    echo [1] Install Git
+    echo [2] Git is already installed
+    set /p choice=Select option:
+    if "%choice%"=="1" goto install_git
+    if "%choice%"=="2" goto check_python
+    echo Invalid entry, please try again.
+    pause >nul
+    goto check_git
+)
+
+:install_git
 echo.
-echo You need Git to continue
-echo [1] install Git
-echo [2] Git is already installed
-echo.
-set /p choice=Select option:
-if "%choice%"=="1" goto install-git
-if "%choice%"=="2" goto step2
-echo.
-echo Invalid choice, press any button..
-echo.
-pause >nul
-goto step1
-:install-git
-echo.
+echo Install Git...
 call winget install -e --id Git.Git
-goto step2
+goto check_python
 
-:step2
-cls
+:check_python
 echo.
-echo --- STEP 2 ---
+echo Check if Python is installed...
+where python >nul 2>nul
+if %errorlevel% neq 0 (
+    echo Python is not installed.
+    echo [1] Install Python
+    echo [2] Python is already installed
+    set /p choice=Select option:
+    if "%choice%"=="1" goto install_python
+    if "%choice%"=="2" goto download_project
+    echo Invalid entry, please try again.
+    pause >nul
+    goto check_python
+)
+
+:install_python
 echo.
-echo You need Python to continue
-echo [1] install Python
-echo [2] Python is already installed
-echo.
-set /p choice=Select option:
-if "%choice%"=="1" goto install-python
-if "%choice%"=="2" goto step3
-echo.
-echo Invalid choice, press any button..
-echo.
-pause >nul
-goto step2
-:install-python
-echo.
+echo Install Python...
 call winget install -e --id Python.Python.3.12
-goto step3
+goto download_project
 
-:step3
-cls
+:download_project
 echo.
-echo --- STEP 3 ---
-echo.
-echo Press any button to download project files
-echo.
+echo Download the project...
 pause >nul
 git clone https://github.com/snoopti/Mp4ToGif
-goto step4
+goto delete_files
 
-:step4
-cls
+:delete_files
 echo.
-echo --- STEP 4 ---
-echo.
-echo Press any button to delete old files
-echo.
-pause >nul
-cd Mp4ToGif
+echo Delete unnecessary files...
+cd /d Mp4ToGif
 rmdir /s /q .git
 del .gitignore README.md .setup.bat
-goto end
+goto finish
 
-:end
-cls
+:finish
 echo.
-echo --- READY ---
+echo --- INSTALLATION COMPLETE ---
 echo.
-echo Du hast %name% erfolgreich installiert, befolge nun weitere schritte um zu wissen wie man es benutzt...
+echo You have successfully installed %name%.
+echo Follow the prompts to continue.
 echo.
-echo continue...
-pause >nul
-echo.
-echo Step1: Put your .mp4 in the "files" folder that you want to convert to a .gif file.
-echo.
-echo continue...
-pause >nul
-echo. Step2: Du kannst jetzt die Setup-Datei löschen und die "start.bat" starten, um den Konvertierungsprozess zu starten.
-echo.
-echo What do you want to do now?
-echo [1] Delete Setup.bat and continue
-echo [2] Hold Setup.bat and continue
+echo [1] Delete setup file and continue
+echo [2] Keep the setup file and proceed
 echo.
 set /p choice=Select option:
-if "%choice%"=="1" goto end-1
-if "%choice%"=="2" goto end-2
+if "%choice%"=="1" goto delete_setup_and_continue
+if "%choice%"=="2" goto keep_setup_and_continue
 
-:end-1
+:delete_setup_and_continue
+echo.
+echo Delete the setup file and proceed...
 start start.bat
 cd ..
 del setup.bat
 exit
 
-:end-2
+:keep_setup_and_continue
+echo.
+echo Keep the setup file and proceed...
 start start.bat
 exit
