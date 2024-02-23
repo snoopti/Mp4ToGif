@@ -1,7 +1,7 @@
 import os
 from moviepy.editor import VideoFileClip
 import tkinter as tk
-from tkinter import simpledialog
+from tkinter import simpledialog, messagebox
 
 defaultFps = 24
 defaultSpeed = 2.0
@@ -10,20 +10,24 @@ defaultSpeed = 2.0
 def mp4_to_gif(mp4_file, gif_file, fps=defaultFps, speed=defaultSpeed):
     try:
         if not os.path.exists(mp4_file):
-            print(f"Fehler: {mp4_file} nicht gefunden!")
+            messagebox.showerror("Fehler", f"Datei {mp4_file} nicht gefunden!")
             return
         if fps <= 0:
-            print("Fehler: FPS muss größer als 0 sein!")
+            messagebox.showerror("Fehler", "FPS muss größer als 0 sein!")
             return
         if speed <= 0:
-            print("Fehler: Geschwindigkeit muss größer als 0 sein!")
+            messagebox.showerror("Fehler", "Geschwindigkeit muss größer als 0 sein!")
             return
         clip = VideoFileClip(mp4_file)
         clip = clip.speedx(speed)
         clip.write_gif(gif_file, fps=fps)
-        print(f"Erfolgreich: {mp4_file} wurde in {gif_file} konvertiert.")
+        messagebox.showinfo(
+            "Erfolg", f"{mp4_file} wurde erfolgreich in {gif_file} konvertiert."
+        )
     except Exception as e:
-        print(f"Fehler beim Konvertieren von {mp4_file} zu GIF:", e)
+        messagebox.showerror(
+            "Fehler", f"Fehler beim Konvertieren von {mp4_file} zu GIF: {e}"
+        )
 
 
 mp4_dir = "./files"
@@ -34,7 +38,7 @@ mp4_files = [
 ]
 
 if not mp4_files:
-    print("Keine MP4-Dateien im Verzeichnis gefunden.")
+    messagebox.showerror(f"Fehler", f"Keine MP4-Dateien in {mp4_dir} gefunden.")
     exit()
 
 root = tk.Tk()
@@ -42,12 +46,12 @@ root.withdraw()
 
 fps = simpledialog.askfloat(
     "FPS",
-    f"Bitte geben Sie die FPS ein (Standardwert: {defaultFps}):",
+    f"FPS: (Standard: {defaultFps}):",
     initialvalue=defaultFps,
 )
 speed = simpledialog.askfloat(
     "VideoSpeed",
-    f"Bitte geben Sie die Geschwindigkeit ein (Standardwert: {defaultSpeed}):",
+    f"Geschwindigkeit: (Standard: {defaultSpeed}):",
     initialvalue=defaultSpeed,
 )
 
