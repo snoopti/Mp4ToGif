@@ -1,8 +1,11 @@
 import os
 from moviepy.editor import VideoFileClip
+import tkinter as tk
+from tkinter import simpledialog
 
 defaultFps = 24
 defaultSpeed = 2.0
+
 
 def mp4_to_gif(mp4_file, gif_file, fps=defaultFps, speed=defaultSpeed):
     try:
@@ -22,17 +25,31 @@ def mp4_to_gif(mp4_file, gif_file, fps=defaultFps, speed=defaultSpeed):
     except Exception as e:
         print(f"Fehler beim Konvertieren von {mp4_file} zu GIF:", e)
 
+
 mp4_dir = "./files"
 gif_dir = "./files"
 
-mp4_files = [os.path.join(mp4_dir, file) for file in os.listdir(mp4_dir) if file.endswith(".mp4")]
+mp4_files = [
+    os.path.join(mp4_dir, file) for file in os.listdir(mp4_dir) if file.endswith(".mp4")
+]
 
 if not mp4_files:
     print("Keine MP4-Dateien im Verzeichnis gefunden.")
     exit()
 
-fps = float(input(f"FPS = (Standardwert: {defaultFps}): ") or defaultFps)
-speed = float(input(f"VideoSpeed = (Standardwert: {defaultSpeed}): ") or defaultSpeed)
+root = tk.Tk()
+root.withdraw()
+
+fps = simpledialog.askfloat(
+    "FPS",
+    f"Bitte geben Sie die FPS ein (Standardwert: {defaultFps}):",
+    initialvalue=defaultFps,
+)
+speed = simpledialog.askfloat(
+    "VideoSpeed",
+    f"Bitte geben Sie die Geschwindigkeit ein (Standardwert: {defaultSpeed}):",
+    initialvalue=defaultSpeed,
+)
 
 for mp4_file in mp4_files:
     file_name = os.path.splitext(os.path.basename(mp4_file))[0]
