@@ -67,6 +67,7 @@ cls
 echo.
 echo Download the project...
 git clone https://github.com/snoopti/Mp4ToGif
+mkdir files
 goto delete_files
 
 :delete_files

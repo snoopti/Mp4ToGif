@@ -5,6 +5,8 @@ set "author=snoopti"
 title %name% by %author%
 cls
 echo.
+echo --- %name% by %author% ---
+echo.
 echo Add an .mp4 file in "%name%/files/" that you want to convert!
 echo.
 echo Press any button to start...
