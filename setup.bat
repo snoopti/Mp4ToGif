@@ -8,6 +8,7 @@ cls
 echo --- Welcome to %name%! ---
 
 :check_git
+cls
 echo.
 echo Check if Git is installed...
 where git >nul 2>nul
@@ -24,12 +25,14 @@ if %errorlevel% neq 0 (
 )
 
 :install_git
+cls
 echo.
 echo Install Git...
 call winget install -e --id Git.Git
 goto check_python
 
 :check_python
+cls
 echo.
 echo Check if Python is installed...
 where python >nul 2>nul
@@ -46,25 +49,28 @@ if %errorlevel% neq 0 (
 )
 
 :install_python
+cls
 echo.
 echo Install Python...
 call winget install -e --id Python.Python.3.12
 goto install_moviepy
 
 :install_moviepy
+cls
 echo.
 echo Install MoviePy...
 pip install moviepy
 goto download_project
 
 :download_project
+cls
 echo.
 echo Download the project...
-pause >nul
 git clone https://github.com/snoopti/Mp4ToGif
 goto delete_files
 
 :delete_files
+cls
 echo.
 echo Delete unnecessary files...
 cd /d Mp4ToGif
@@ -73,6 +79,7 @@ del .gitignore README.md .setup.bat
 goto finish
 
 :finish
+cls
 echo.
 echo --- INSTALLATION COMPLETE ---
 echo.
@@ -87,6 +94,7 @@ if "%choice%"=="1" goto delete_setup_and_continue
 if "%choice%"=="2" goto keep_setup_and_continue
 
 :delete_setup_and_continue
+cls
 echo.
 echo Delete the setup file and proceed..
 echo Press any button to continue..
@@ -97,6 +105,7 @@ del setup.bat
 exit
 
 :keep_setup_and_continue
+cls
 echo.
 echo Keep the setup file and proceed
 echo Press any button to continue..
