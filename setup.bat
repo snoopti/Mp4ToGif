@@ -82,7 +82,9 @@ if "%choice%"=="2" goto keep_setup_and_continue
 
 :delete_setup_and_continue
 echo.
-echo Delete the setup file and proceed...
+echo Delete the setup file and proceed..
+echo Press any button to continue..
+pause >nul
 start start.bat
 cd ..
 del setup.bat
@@ -90,6 +92,8 @@ exit
 
 :keep_setup_and_continue
 echo.
-echo Keep the setup file and proceed...
+echo Keep the setup file and proceed
+echo Press any button to continue..
+pause >nul
 start start.bat
 exit
